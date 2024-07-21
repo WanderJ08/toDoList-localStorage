@@ -46,9 +46,9 @@ body {
   height: 70px;
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 20px;
   gap: 70px;
-  margin: 40px 0;
+  margin: 35px 0;
 }
 
 .agregar-tarea input {
@@ -57,10 +57,15 @@ body {
   border-radius: 8px;
   border: none;
   background-color: var(--white);
+  color: var(--purple);
+  font-size: 1.1rem;
+}
+.agregar-tarea input:focus {
+  outline: none;
 }
 
 .agregar-tarea i {
-  font-size: 50px;
+  font-size: 40px;
   color: var(--purple);
 }
 
