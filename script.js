@@ -6,6 +6,15 @@ const check = "ri-checkbox-circle-line";
 const uncheck = "ri-circle-line";
 const lineThrough = "line-through";
 let id = 0;
+const LIST = [];
+
+const fechaActual = new Date();
+fecha.innerHTML = fechaActual.toLocaleDateString("EN-EN", {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
 
 // Función para agregar un nuevo elemento a la lista
 function agregarTarea(tarea, id, realizado, eliminado) {
@@ -22,23 +31,31 @@ function agregarTarea(tarea, id, realizado, eliminado) {
           </li>`;
   lista.insertAdjacentHTML("beforeend", elemento);
 }
-//funcion de tarea realizada
+
 function tareaRealizada(element) {
   element.classList.toggle(check);
   element.classList.toggle(uncheck);
   element.parentNode.querySelector(".text").classList.toggle(lineThrough);
+  LIST[element.id].realizado = LIST[element.id].realizado ? false : true;
 }
-//funcion de tarea eliminada
+
 function tareaEliminada(element) {
   element.parentNode.parentNode.removeChild(element.parentNode);
+  LIST[element.id].eliminado = true;
 }
 botonEnter.addEventListener("click", () => {
   const tarea = input.value;
   if (tarea) {
     agregarTarea(tarea, id, false, false);
-    input.value = "";
-    id++;
+    LIST.push({
+      name: tarea,
+      id: id,
+      realizado: false,
+      eliminado: false,
+    });
   }
+  input.value = "";
+  id++;
 });
 
 document.addEventListener("keyup", (e) => {
@@ -46,9 +63,15 @@ document.addEventListener("keyup", (e) => {
     const tarea = input.value;
     if (tarea) {
       agregarTarea(tarea, id, false, false);
-      input.value = "";
-      id++;
+      LIST.push({
+        name: tarea,
+        id: id,
+        realizado: false,
+        eliminado: false,
+      });
     }
+    input.value = "";
+    id++;
   }
 });
 
