@@ -26,8 +26,12 @@ function agregarTarea(tarea, id, realizado, eliminado) {
 function tareaRealizada(element) {
   element.classList.toggle(check);
   element.classList.toggle(uncheck);
+  element.parentNode.querySelector(".text").classList.toggle(lineThrough);
 }
-
+//funcion de tarea eliminada
+function tareaEliminada(element) {
+  element.parentNode.parentNode.removeChild(element.parentNode);
+}
 botonEnter.addEventListener("click", () => {
   const tarea = input.value;
   if (tarea) {
@@ -51,9 +55,6 @@ document.addEventListener("keyup", (e) => {
 lista.addEventListener("click", (e) => {
   const element = e.target;
   const elementData = element.attributes.data.value;
-  const elementId = element;
-  console.log(elementData);
-  console.log(elementId);
   if (elementData === "realizado") {
     tareaRealizada(element);
   }
