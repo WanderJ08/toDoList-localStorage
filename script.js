@@ -6,7 +6,7 @@ const check = "ri-checkbox-circle-line";
 const uncheck = "ri-circle-line";
 const lineThrough = "line-through";
 let id = 0;
-const LIST = [];
+let LIST;
 
 const fechaActual = new Date();
 fecha.innerHTML = fechaActual.toLocaleDateString("EN-EN", {
@@ -16,7 +16,6 @@ fecha.innerHTML = fechaActual.toLocaleDateString("EN-EN", {
   year: "numeric",
 });
 
-// Función para agregar un nuevo elemento a la lista
 function agregarTarea(tarea, id, realizado, eliminado) {
   const REALIZADO = realizado ? check : uncheck;
   const LINE = realizado ? lineThrough : "";
@@ -54,6 +53,7 @@ botonEnter.addEventListener("click", () => {
       eliminado: false,
     });
   }
+  localStorage.setItem("TO_DO", JSON.stringify(LIST));
   input.value = "";
   id++;
 });
@@ -70,6 +70,7 @@ document.addEventListener("keyup", (e) => {
         eliminado: false,
       });
     }
+    localStorage.setItem("TO_DO", JSON.stringify(LIST));
     input.value = "";
     id++;
   }
@@ -84,4 +85,21 @@ lista.addEventListener("click", (e) => {
   if (elementData === "eliminado") {
     tareaEliminada(element);
   }
+  localStorage.setItem("TO_DO", JSON.stringify(LIST));
 });
+
+let data = localStorage.getItem("TO_DO");
+if (data) {
+  LIST = JSON.parse(data);
+  id = LIST.length;
+  cargarLista(LIST);
+} else {
+  LIST = [];
+  id = 0;
+}
+
+function cargarLista(DATA) {
+  DATA.forEach(function (i) {
+    agregarTarea(i.name, i.id, i.realizado, i.eliminado);
+  });
+}
