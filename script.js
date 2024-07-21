@@ -5,7 +5,7 @@ const botonEnter = document.querySelector("#enter");
 const check = "ri-checkbox-circle-line";
 const uncheck = "ri-circle-line";
 const lineThrough = "line-through";
-const id = 0;
+let id = 0;
 
 // Función para agregar un nuevo elemento a la lista
 function agregarTarea(tarea, id, realizado, eliminado) {
@@ -21,6 +21,11 @@ function agregarTarea(tarea, id, realizado, eliminado) {
             <i class="ri-delete-bin-5-fill" data="eliminado" id="${id}"></i>
           </li>`;
   lista.insertAdjacentHTML("beforeend", elemento);
+}
+//funcion de tarea realizada
+function tareaRealizada(element) {
+  element.classList.toggle(check);
+  element.classList.toggle(uncheck);
 }
 
 botonEnter.addEventListener("click", () => {
@@ -40,5 +45,19 @@ document.addEventListener("keyup", (e) => {
       input.value = "";
       id++;
     }
+  }
+});
+
+lista.addEventListener("click", (e) => {
+  const element = e.target;
+  const elementData = element.attributes.data.value;
+  const elementId = element;
+  console.log(elementData);
+  console.log(elementId);
+  if (elementData === "realizado") {
+    tareaRealizada(element);
+  }
+  if (elementData === "eliminado") {
+    tareaEliminada(element);
   }
 });
